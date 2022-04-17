@@ -13,6 +13,8 @@ public class SquareNumberRemover {
         ArrayList<Integer> myArrayList = new ArrayList<Integer>(Arrays.asList(
                 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
         ArrayList<Integer> myArrayList2;
+        ArrayList<Integer> neverChangingArrayList = new ArrayList<Integer>(Arrays.asList(
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));;
 //        new ArrayList<Integer>(Arrays.asList(
 //                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
         ArrayList<Integer> newArrayList = new ArrayList<Integer>();
@@ -33,21 +35,42 @@ public class SquareNumberRemover {
 
 
 //Loops if got incorrect
+        //starterNum is the first entry in the newArrayList
+        //currentNum is the last number placed in the newArrayList that is being compared to iterations.
     int currentNum = myArrayList.get(0);
+    int starterNum = myArrayList.get(0);
+    int starterNumIndex = 0;
     int currentNumIndex = 0;
     int sum = 0;
-    newArrayList.add(currentNum);
-    myArrayList.remove(0);
-//    Iterator itr = myArrayList.iterator();
+    int count = 0;
+
+
 do {
-    currentNum = myArrayList.get(currentNumIndex);
-    myArrayList2 = myArrayList;
-    while(myArrayList.size() > 0) {
-        myArrayList2 = myArrayList;
-//        if(currentNumIndex == 1){
-//            newArrayList.add(currentNum);
-//            continue;
-//        }
+
+
+
+    myArrayList2 = (ArrayList<Integer>)neverChangingArrayList.clone();
+    myArrayList = (ArrayList<Integer>)neverChangingArrayList.clone();
+    newArrayList.clear();
+    starterNum = neverChangingArrayList.get(starterNumIndex);
+
+    newArrayList.add(starterNum);
+    currentNum = starterNum;
+    System.out.println(starterNum);
+    System.out.println(myArrayList.size());
+if(myArrayList.size() < myArrayList.indexOf(starterNum))  {
+    currentNum = myArrayList.get(starterNum);
+}
+
+
+    if(myArrayList.size() > myArrayList2.indexOf(currentNum)){
+        myArrayList.remove(myArrayList2.indexOf(currentNum));
+    }
+
+    Iterator itr = myArrayList.iterator();
+    while(itr.hasNext()) {
+
+
         for(Integer i : myArrayList){
             sum = currentNum + i;
             if (Math.sqrt(sum) % 1 == 0) {
@@ -56,31 +79,42 @@ do {
                 }
                 newArrayList.add(myArrayList2.get(myArrayList2.indexOf(i)));
                 currentNum = myArrayList2.get(myArrayList2.indexOf(i));
-                myArrayList.remove(i);
                 break;
-
-//                if(i > 1) {
-//                    newArrayList.add(myArrayList2.get(myArrayList2.indexOf(i)));
-//                }
-
-//                else {
-//                    newArrayList.add(myArrayList2.get(myArrayList2.indexOf(i) - 1));
-//                }
-
             }
 
         }
-        System.out.println(newArrayList);
-        currentNumIndex = myArrayList2.get(myArrayList2.indexOf(currentNum)) + 1;
+        itr.next();
+        if(myArrayList.size() == 1){
+            continue;
+        }
+        itr.remove();
+
+        count++;
+        System.out.println(count + " " + newArrayList);
+
+        if(myArrayList.size() == 1){
+            break;
+        }
 
     }
-    System.out.println(newArrayList);
-    System.out.println("hi");
+    starterNumIndex++;
+    if(myArrayList.size()>0 && myArrayList.size() < 13) {
+        int counter = 0;
+//        currentNumIndex = myArrayList2.get(myArrayList2.indexOf(currentNum) + 1) ;
+        System.out.println(counter + " " +newArrayList);
+        System.out.println("hi");
+        continue;
+    }
+
+
+
+
+
 
 //            num
 
 
-}while (myArrayList.size() > 0);
+}while (newArrayList.size() < 15);
 
     }
 }
